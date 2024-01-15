@@ -39,12 +39,25 @@ def process_message(message):
     global LAST_MESSAGE_ID
     text = message["text"].lower()
 
+    sender_id = message["sender_id"]
+    name = message["name"]
+
+    # Your specific user ID (replace with the actual ID)
+    my_user_id = "66841987"
+
+    # Bot's own ID to prevent it from responding to its own messages
+    bot_id = BOT_ID
+
     # i.e. responding to a specific message (note that this checks if "hello bot" is anywhere in the message, not just the beginning)
-    if "hello bot" in text:
-        send_message("sup")
+    if sender_id == my_user_id and sender_id != bot_id:
+        if "hello bot" in text:
+            send_message("sup")
+
+        # Respond to greetings
+        if "good morning" in text or "good night" in text:
+            send_message(f"{text}, {name}!")
 
     LAST_MESSAGE_ID = message["id"]
-
 
 def main():
     global LAST_MESSAGE_ID
